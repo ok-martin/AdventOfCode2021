@@ -17,8 +17,8 @@ while(my $line = <$info>)  {
     my @pointB = split(',', @points[1]);
     
     my $xx1 = int(@pointA[0]);
-    my $xx2 = int(@pointA[1]);
-    my $yy1 = int(@pointB[0]);
+    my $xx2 = int(@pointB[0]);
+    my $yy1 = int(@pointA[1]);
     my $yy2 = int(@pointB[1]);
     my $minX = $xx1;
     my $maxX = $xx2;
@@ -43,7 +43,7 @@ while(my $line = <$info>)  {
         $maxxxxxY = $maxY;
     }
     
-    push(@pointLines, [$xx1, $xx2, $yy1, $yy2, $minY, $maxY]);
+    push(@pointLines, [$xx1, $xx2, $yy1, $yy2, $minX, $maxX, $minY, $maxY]);
 }
 
 my @board = ();
@@ -65,7 +65,7 @@ foreach (@pointLines) {
 	my $maxY = @$_[7];
 	
 	# straight line
-	if ($xx1 == $xx2 or $yy1 == $yy2) {
+	if (($xx1 == $xx2) || ($yy1 == $yy2)) {
         for (my $yy = $minY; $yy <= $maxY; $yy++) {
             for (my $xx = $minX; $xx <= $maxX; $xx++) {
                 $board[$yy][$xx] = $board[$yy][$xx] + 1; 
@@ -94,8 +94,8 @@ foreach (@pointLines) {
 }
 
 my $count = 0;
-foreach my $aa (0..$maxxxxxX+1) {
-    foreach my $bb (0..$maxxxxxY+1) {
+foreach my $aa (0..$maxxxxxY+1) {
+    foreach my $bb (0..$maxxxxxX+1) {
 		if ($board[$aa][$bb] > 1) {
 			$count += 1;
 		}
